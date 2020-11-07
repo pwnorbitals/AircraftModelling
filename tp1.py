@@ -1,11 +1,14 @@
 ### AircraftModelling practical works 
+import csv
+import numpy as np
 
 endTime = 60 #s
-initialState = []
+stateNames = ["test"]
+initialState = np.array([0.])
 integrationStep = 1 
 
 def derivatives(state, time):
-    pass
+    return np.array([1/(time**2 + 1)])
 
 
 def integrator_step(state, time, derivatives) :
@@ -20,6 +23,11 @@ def integrator_step(state, time, derivatives) :
 currentTime = 0
 state = initialState
 if __name__ == "__main__":
-    while currentTime < endTime:
-        deltaTime, state = integrator_step(state, currentTime, derivatives)
-        currentTime += deltaTime
+    with open('sim_out.csv', 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["Time"]+ stateNames)
+        writer.writerow([currentTime] + state)
+        while currentTime < endTime:
+            deltaTime, state = integrator_step(state, currentTime, derivatives)
+            currentTime += deltaTime
+            writer.writerow([currentTime] + state)
