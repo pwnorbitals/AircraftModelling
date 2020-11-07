@@ -9,12 +9,12 @@ def derivatives(state, time):
 
 
 def integrator_step(state, time, derivatives) :
-        k1 = integrationStep*derivatives(state, currentTime)
-        k2 = integrationStep*derivatives(r + k1/2.0, currentTime + integrationStep/2.0)
-        k3 = integrationStep*derivatives(r + k2/2.0, currentTime + integrationStep/2.0)
-        k4 = integrationStep*derivatives(r + k3, currentTime + integrationStep)
-        r += (k1 + 2.0*k2 + 2.0*k3 + k4)/6.0 
-    return integrationStep
+    k1 = integrationStep*derivatives(state, currentTime)
+    k2 = integrationStep*derivatives(state + k1/2.0, currentTime + integrationStep/2.0)
+    k3 = integrationStep*derivatives(state + k2/2.0, currentTime + integrationStep/2.0)
+    k4 = integrationStep*derivatives(state + k3, currentTime + integrationStep)
+    state += (k1 + 2.0*k2 + 2.0*k3 + k4)/6.0 
+    return integrationStep, state
 
 
 currentTime = 0
