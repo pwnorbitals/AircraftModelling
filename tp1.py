@@ -2,6 +2,8 @@
 
 endTime = 60 #s
 
+test = True
+
 
 
 
