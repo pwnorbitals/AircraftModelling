@@ -25,9 +25,9 @@ state = initialState
 if __name__ == "__main__":
     with open('sim_out.csv', 'w') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["Time"]+ stateNames)
-        writer.writerow([currentTime] + state)
+        writer.writerow(["Time", *stateNames])
+        writer.writerow([currentTime, *state])
         while currentTime < endTime:
             deltaTime, state = integrator_step(state, currentTime, derivatives)
             currentTime += deltaTime
-            writer.writerow([currentTime] + state)
+            writer.writerow([currentTime, *state])
