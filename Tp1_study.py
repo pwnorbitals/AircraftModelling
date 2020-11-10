@@ -115,7 +115,7 @@ l_t = 3/2.0 * l_ref # total length
 m = 8400 # mass in kg
 c = 0.52
 S = 34 # m^2 Area
-r_g = 2.65 # m Radius of gyration
+r_g = 2.65 # m Gyration radius
 
 h_m = ft2m(24000)
 
@@ -139,7 +139,7 @@ Q = 1/2. * rho(h_m) * V_eq**2
 
 epsilon = 1e-3
 
-new_alpha_eq, new_F_px,delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq = compute_equilibrium(Q, S, m, delta_m_0, C_x0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon)
+new_alpha_eq, new_F_px, delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq = compute_equilibrium(Q, S, m, delta_m_0, C_x0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon)
 
 print("new_alpha_eq \n", new_alpha_eq * 180/np.pi)
 
