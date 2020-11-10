@@ -1,14 +1,40 @@
 ### AircraftModelling practical works 
+
+
 import csv
 import numpy as np
 
 endTime = 60 #s
-stateNames = ["test"]
-initialState = np.array([0.])
-integrationStep = 1 
+integrationStep = 0.01 #s
+stateNames = ["V", "gamma", "alpha", "q", "theta", "z"]
+initialState = np.array([0., 0., 0., 0., 0., 0.]).T
+
+
+
+
 
 def derivatives(state, time):
+    
+    # Slide 69
+    A = np.array([
+        [-Xv, -Xgamma, -Xalpha, 0, 0, 0],
+        [Zv, 0, Za, 0, 0, 0],
+        [-Zv, 0, -Zalpha, 1, 0, 0],
+        [0, 0, malpha, mq, 0, 0],
+        [0, 0, 0, 1, 0, 0],
+        [0, Veq, 0, 0, 0, 0]
+    ])
+    B = np.array([0, Zdeltam, -Zdeltam, mdeltam, 0, 0]).T
+    input = np.array([deltam])
+    stateDerivatives = A*state + B*input
+
+    # Yoann : C is eye(6*6), D is zeros
+
+
     return np.array([1/(time**2 + 1)])
+
+
+
 
 
 def integrator_step(state, time, derivatives) :
