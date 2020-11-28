@@ -14,6 +14,8 @@ initialState = np.array([0., 0., 0., 0., 0., 0.]).T
 
 
 def derivatives(state, time):
+
+    V, gamma, alpha, q, theta, z = state
     
     # Slide 69
     A = np.array([
@@ -25,10 +27,13 @@ def derivatives(state, time):
         [0, Veq, 0, 0, 0, 0]
     ])
     B = np.array([0, Zdeltam, -Zdeltam, mdeltam, 0, 0]).T
+    # Yoann : C is eye(6*6), D is zeros
+
     input = np.array([deltam])
     stateDerivatives = A*state + B*input
+    output           = C*state + D*input
 
-    # Yoann : C is eye(6*6), D is zeros
+    
 
 
     return np.array([1/(time**2 + 1)])
