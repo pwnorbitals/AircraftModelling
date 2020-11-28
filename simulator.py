@@ -5,9 +5,6 @@ import csv
 import numpy as np
 from StateSpaceModel import Xv, Xgamma, Xalpha, Zv, Zalpha, malpha, mq, Zdelta_m as Zdeltam, mdelta_m as mdeltam
 from Tp1_study import V_eq as Veq, delta_m_0 as deltam0
-import matplotlib.pyplot as plt
-import itertools
-import copy
 import os
 import sys
 
@@ -15,7 +12,6 @@ endTime = 60 #s
 integrationStep = 0.01 #s
 stateNames = ["V", "gamma", "alpha", "q", "theta", "z"]
 initialState = np.c_[[0., 0., 0., 0., 0., 0.]]
-doPlot = False # For plotting, prefer using the CSV output in dedicated software
 doCSV = True
 doStdout = False
 
@@ -38,7 +34,7 @@ def derivatives(state, time):
     
     # output is full state vector
     C = np.eye(6)
-    D = np.zeros((1,1))
+    D = np.zeros((6,1))
 
     input = np.c_[[deltam0]]
     stateDerivatives = np.dot(A,state) + np.dot(B,input)
@@ -77,14 +73,6 @@ if __name__ == "__main__":
             print(*stateNames)
             print(*state.flatten())
 
-        # Plotter init
-        if doPlot :
-            plt.ion()
-            plt.show()
-            toPlot = []
-            toPlot.append(copy.deepcopy(state))
-            plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
-            plt.plot(*plot_args)
         
         # Main loop
         while currentTime < endTime:
@@ -101,8 +89,4 @@ if __name__ == "__main__":
             if doStdout :
                 print(*state.flatten())
 
-            # Plotter update
-            if doPlot :
-                toPlot.append(copy.deepcopy(state))
-                plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
-                plt.plot(*plot_args)
+            
