@@ -8,12 +8,15 @@ from Tp1_study import V_eq as Veq, delta_m_0 as deltam0
 import matplotlib.pyplot as plt
 import itertools
 import copy
+import os
+import sys
 
 endTime = 60 #s
 integrationStep = 0.01 #s
 stateNames = ["V", "gamma", "alpha", "q", "theta", "z"]
 initialState = np.c_[[0., 0., 0., 0., 0., 0.]]
-
+doPlot = False # For plotting, prefer using the CSV output in dedicated software
+doWrite = True
 
 
 
@@ -60,20 +63,22 @@ def integrator_step(state, time, derivatives) :
 currentTime = 0
 state = initialState    
 if __name__ == "__main__":
-    with open('sim_out.csv', 'w') as csvfile:
+    with open(os.path.join(sys.path[0], 'sim_out.csv'), 'w') as csvfile:
         
         # Writer init
-        writer = csv.writer(csvfile)
-        writer.writerow(["Time", *stateNames])
-        writer.writerow([currentTime, *state])
+        if doWrite :
+            writer = csv.writer(csvfile)
+            writer.writerow(["Time", *stateNames])
+            writer.writerow([currentTime, *state.flatten()])
 
         # Plotter init
-        plt.ion()
-        plt.show()
-        toPlot = []
-        toPlot.append(copy.deepcopy(state))
-        plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
-        plt.plot(*plot_args)
+        if doPlot :
+            plt.ion()
+            plt.show()
+            toPlot = []
+            toPlot.append(copy.deepcopy(state))
+            plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
+            plt.plot(*plot_args)
         
         # Main loop
         while currentTime < endTime:
@@ -84,10 +89,11 @@ if __name__ == "__main__":
             currentTime += deltaTime
 
             # Writer update
-            writer.writerow([currentTime, *state])  
+            if doWrite :
+                writer.writerow([currentTime, *state.flatten()])  
 
             # Plotter update
-            toPlot.append(copy.deepcopy(state))
-            plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
-            plt.plot(*plot_args)
-            plt.pause(0.5)
+            if doPlot :
+                toPlot.append(copy.deepcopy(state))
+                plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
+                plt.plot(*plot_args)
