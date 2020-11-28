@@ -3,40 +3,43 @@
 
 import csv
 import numpy as np
+from StateSpaceModel import Xv, Xgamma, Xalpha, Zv, Zalpha, malpha, mq, Zdelta_m as Zdeltam, mdelta_m as mdeltam
+from Tp1_study import V_eq as Veq, delta_m_0 as deltam0
 
 endTime = 60 #s
 integrationStep = 0.01 #s
 stateNames = ["V", "gamma", "alpha", "q", "theta", "z"]
-initialState = np.array([0., 0., 0., 0., 0., 0.]).T
+initialState = np.c_[[0., 0., 0., 0., 0., 0.]]
 
 
 
 
 
 def derivatives(state, time):
-
-    V, gamma, alpha, q, theta, z = state
     
     # Slide 69
     A = np.array([
         [-Xv, -Xgamma, -Xalpha, 0, 0, 0],
-        [Zv, 0, Za, 0, 0, 0],
+        [Zv, 0, Zalpha, 0, 0, 0],
         [-Zv, 0, -Zalpha, 1, 0, 0],
         [0, 0, malpha, mq, 0, 0],
         [0, 0, 0, 1, 0, 0],
         [0, Veq, 0, 0, 0, 0]
     ])
-    B = np.array([0, Zdeltam, -Zdeltam, mdeltam, 0, 0]).T
-    # Yoann : C is eye(6*6), D is zeros
+    B = np.c_[[0, Zdeltam, -Zdeltam, mdeltam, 0, 0]]
+    
+    # output is full state vector
+    C = np.eye(6)
+    D = np.zeros((1,1))
 
-    input = np.array([deltam])
-    stateDerivatives = A*state + B*input
-    output           = C*state + D*input
+    input = np.c_[[deltam0]]
+    stateDerivatives = np.dot(A,state) + np.dot(B,input)
+    output           = np.dot(C,state) + np.dot(D,input)
 
     
 
 
-    return np.array([1/(time**2 + 1)])
+    return stateDerivatives
 
 
 
