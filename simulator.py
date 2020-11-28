@@ -58,8 +58,21 @@ def integrator_step(state, time, derivatives) :
     return integrationStep, state
 
 
+
+
+
+
 currentTime = 0
 state = initialState    
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
     with open(os.path.join(sys.path[0], 'sim_out.csv'), 'w') as csvfile:
         
@@ -81,6 +94,7 @@ if __name__ == "__main__":
             deltaTime, state = integrator_step(state, currentTime, derivatives)
             assert(not np.isnan(state).any())
             currentTime += deltaTime
+
 
             # Writer update
             if doCSV :
