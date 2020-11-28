@@ -5,6 +5,9 @@ import csv
 import numpy as np
 from StateSpaceModel import Xv, Xgamma, Xalpha, Zv, Zalpha, malpha, mq, Zdelta_m as Zdeltam, mdelta_m as mdeltam
 from Tp1_study import V_eq as Veq, delta_m_0 as deltam0
+import matplotlib.pyplot as plt
+import itertools
+import copy
 
 endTime = 60 #s
 integrationStep = 0.01 #s
@@ -55,13 +58,36 @@ def integrator_step(state, time, derivatives) :
 
 
 currentTime = 0
-state = initialState
+state = initialState    
 if __name__ == "__main__":
     with open('sim_out.csv', 'w') as csvfile:
+        
+        # Writer init
         writer = csv.writer(csvfile)
         writer.writerow(["Time", *stateNames])
         writer.writerow([currentTime, *state])
+
+        # Plotter init
+        plt.ion()
+        plt.show()
+        toPlot = []
+        toPlot.append(copy.deepcopy(state))
+        plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
+        plt.plot(*plot_args)
+        
+        # Main loop
         while currentTime < endTime:
+            
+            # Time step
             deltaTime, state = integrator_step(state, currentTime, derivatives)
+            assert(not np.isnan(state).any())
             currentTime += deltaTime
-            writer.writerow([currentTime, *state])
+
+            # Writer update
+            writer.writerow([currentTime, *state])  
+
+            # Plotter update
+            toPlot.append(copy.deepcopy(state))
+            plot_args = [i for i in itertools.chain.from_iterable([(currentTime, toPlot[:][0][i]) for i in range(toPlot[0].shape[0])])]
+            plt.plot(*plot_args)
+            plt.pause(0.5)
