@@ -1,6 +1,6 @@
 import numpy as np
 
-from Tp1_study import r_g, Cz_eq, V_eq, Q, S, Cx_eq, m, new_F_px, new_alpha_eq, Cx_delta_m, l_ref, X, Y, k, Cz_alpha
+from Tp1_study import r_g, Cz_eq, V_eq, Q, S, Cx_eq, m, new_F_px, new_alpha_eq, Cx_delta_m, l_ref, X, Y, k
 
 
 Cz_alpha = 2.2
@@ -35,4 +35,21 @@ Zalpha = new_F_px * np.cos(new_alpha_eq) / (m * V_eq) + Q*S*Cz_alpha / (m*V_eq) 
 Zgamma = g0*np.sin(gamma_eq) / V_eq
 Zdelta_m = Q*S*Cz_delta_m / (m*V_eq) #
 Ztho = Ftho * np.sin(new_alpha_eq) / (m*V_eq)
+
+
+A = np.array([
+        [-Xv, -Xgamma, -Xalpha, 0, 0, 0],
+        [Zv, 0, Zalpha, 0, 0, 0],
+        [-Zv, 0, -Zalpha, 1, 0, 0],
+        [0, 0, malpha, mq, 0, 0],
+        [0, 0, 0, 1, 0, 0],
+        [0, V_eq, 0, 0, 0, 0]
+    ])
+
+B = np.c_[[0, Zdelta_m, -Zdelta_m, mdelta_m, 0, 0]]
+C = np.eye(6)
+D = np.zeros((6,1))
+
+
+
 
