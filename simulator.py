@@ -16,7 +16,9 @@ integrationStep = 0.01 #s
 stateNames = ["V", "gamma", "alpha", "q", "theta", "z"]
 initialState = np.c_[[0., 0., 0., 0., 0., 0.]]
 doPlot = False # For plotting, prefer using the CSV output in dedicated software
-doWrite = True
+doCSV = True
+doStdout = False
+
 
 
 
@@ -79,10 +81,14 @@ if __name__ == "__main__":
     with open(os.path.join(sys.path[0], 'sim_out.csv'), 'w') as csvfile:
         
         # Writer init
-        if doWrite :
+        if doCSV :
             writer = csv.writer(csvfile)
             writer.writerow(["Time", *stateNames])
             writer.writerow([currentTime, *state.flatten()])
+
+        if doStdout :
+            print(*stateNames)
+            print(*state.flatten())
 
         # Plotter init
         if doPlot :
@@ -103,8 +109,11 @@ if __name__ == "__main__":
 
 
             # Writer update
-            if doWrite :
+            if doCSV :
                 writer.writerow([currentTime, *state.flatten()])  
+
+            if doStdout :
+                print(*state.flatten())
 
             # Plotter update
             if doPlot :

@@ -141,7 +141,8 @@ epsilon = 1e-3
 
 new_alpha_eq, new_F_px, delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq = compute_equilibrium(Q, S, m, delta_m_0, C_x0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon)
 
-print("new_alpha_eq \n", new_alpha_eq * 180/np.pi)
+if __name__ == "__main__":
+    print("new_alpha_eq ", new_alpha_eq * 180/np.pi)
 
 
 
