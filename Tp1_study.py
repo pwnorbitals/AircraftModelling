@@ -66,7 +66,7 @@ def T_P(h):
 def rho(h):
 
     temp, pressure = T_P(h)
-    rho = (pressure * 28.976) / (8.3144621 * temp)
+    rho = (1e-3 * pressure * 28.976) / (8.3144621 * temp)
 
     return rho
 
@@ -85,21 +85,30 @@ def ft2m(h_ft):
 
     return h_m
 
-def compute_equilibrium(Q,S,m, delta_m_0, Cx_0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon):
+def compute_equilibrium(Q,S,m, delta_m_0, Cx_0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon, maxit = 70):
 
     alpha_eq = 0
     F_px = 0
-    g0 = -9.81
+    g0 = 9.81
+    it = 0
+    alpha_0 = 0.012
+
 
     while(True):
+        it += 1
+        if it > maxit :
+            raise "maxit"
+        
         Cz_eq = 1/(Q*S) * (m*g0 - F_px * np.sin(alpha_eq))
         Cx_eq = Cx_0 + k*Cz_eq**2
 
         Cx_delta_m = 2 * k *Cz_eq*Cz_delta_m
-        delta_m_eq = delta_m_0 - (Cx_eq * np.sin(alpha_eq) + Cz_eq * np.cos(alpha_eq))/(Cx_delta_m * np.sin(alpha_eq) + Cz_delta_m * np.cos(alpha_eq)) * X *(Y - X)
+        delta_m_eq = delta_m_0 - (Cx_eq * np.sin(alpha_eq) + Cz_eq * np.cos(alpha_eq))/(Cx_delta_m * np.sin(alpha_eq) + Cz_delta_m * np.cos(alpha_eq)) * X/(Y - X)
 
-        new_alpha_eq = alpha_eq + Cz_eq / Cz_alpha - Cz_delta_m/ Cz_alpha * delta_m_eq
+        new_alpha_eq = alpha_0 + Cz_eq / Cz_alpha - (Cz_delta_m/ Cz_alpha) * delta_m_eq
         new_F_px = Q * S * Cx_eq / np.cos(new_alpha_eq)
+
+        print(new_alpha_eq)
 
         if np.abs(new_alpha_eq - alpha_eq) < epsilon :
             return new_alpha_eq, new_F_px,delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq
@@ -124,15 +133,17 @@ C_x0 = 0.029
 k = 0.505
 
 Cz_delta_m = 0.34
-Xf = 0.608
+f = -0.608
+Xf = f * l_t
 Xg = -c * l_t
-f_delta = 0.9
+f_delta = -0.9
 Xf_delta = f_delta * l_t
 
 Cz_alpha = 2.2
 
 X = Xf - Xg
 Y = Xf_delta - Xg
+print("X, Y =", X, Y)
 
 V_eq = mach * sound_speed(h_m)
 Q = 1/2. * rho(h_m) * V_eq**2
@@ -142,7 +153,8 @@ epsilon = 1e-3
 new_alpha_eq, new_F_px, delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq = compute_equilibrium(Q, S, m, delta_m_0, C_x0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon)
 
 if __name__ == "__main__":
-    print("new_alpha_eq ", new_alpha_eq * 180/np.pi)
+    print("rho, vson =", rho(h_m), sound_speed(h_m))
+    print("new_alpha_eq ", new_alpha_eq * 180/np.pi, "deg")
 
 
 
