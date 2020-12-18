@@ -28,7 +28,7 @@ if __name__ == "__main__":
     sisotool(sys)
 
 T, yout = control.step_response(tf_k)
-plt.plot(T,yout)
+plt.plot(T,yout) # T ou yout ou ... toutouy outou
 plt.title("Step resonse q feedback")
 plt.xlabel("Time sample")
 plt.ylabel("Amplitude")
