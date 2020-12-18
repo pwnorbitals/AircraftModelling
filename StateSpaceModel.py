@@ -1,4 +1,5 @@
 import numpy as np
+
 from sisopy31 import *
 
 from Tp1_study import r_g, Cz_eq, V_eq, Q, S, Cx_eq, m, new_F_px, new_alpha_eq, Cx_delta_m, l_ref, X, Y, k
@@ -57,10 +58,10 @@ print(B)
 
 A_reduced = A[1:6, 1:6]
 B_reduced = B[1:6, 0:1]
-C_q = np.array([[0, 0, 1, 0, 0]])
-D_q = np.array([[0]])
+Cq = np.array([[0, 0, 1, 0, 0]])
+Dq = np.array([[0]])
 
-sys = ss(A_reduced, B_reduced, C_q, D_q)
+sys = ss(A_reduced, B_reduced, Cq, Dq)
 
 if __name__== "__main__":
     control.matlab.damp(sys_original)
