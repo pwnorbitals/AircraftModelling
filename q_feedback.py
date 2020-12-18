@@ -1,6 +1,7 @@
 import numpy as np
 import control
 from StateSpaceModel import A_reduced, B_reduced, Cq, Dq
+import matplotlib.pyplot as plt
 
 Kr = -0.18817
 
@@ -15,7 +16,16 @@ res = control.damp(sys)
 tf_k= control.tf(sys)
 
 
-print("Transfert function : ", tf_k)
+print("Transfer function : ", tf_k)
 print("pulsation 1 : ", res[0][0]*2*np.pi, " rad/s")
 print("pulsation 2 : ", res[0][1]*2*np.pi, " rad/s")
 print("pulsation 3 : ", res[0][2]*2*np.pi, " rad/s")
+
+
+T, yout = control.step_response(tf_k)
+plt.plot(T,yout)
+plt.title("Step resonse q feedback")
+plt.xlabel("Time sample")
+plt.ylabel("Amplitude")
+plt.show()
+
