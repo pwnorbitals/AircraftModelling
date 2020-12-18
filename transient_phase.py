@@ -22,9 +22,9 @@ res = control.damp(sys)
 tf_ph = control.tf(sys)
 print("Transfert function : ", tf_ph)
 T_ph, yout_ph = control.step_response(tf_ph)
-print("T_ph.shape ", T_ph.shape)
-print("yout_ph.shape ", yout_ph.shape)
-print("yout_ph[0,:].shape ",yout_ph[0,:].shape )
+#print("T_ph.shape ", T_ph.shape)
+#print("yout_ph.shape ", yout_ph.shape)
+#print("yout_ph[0,:].shape ",yout_ph[0,:].shape )
 
 
 plt.plot(T_ph, yout_ph[0,:])

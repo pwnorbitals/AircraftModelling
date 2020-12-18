@@ -2,6 +2,7 @@ import numpy as np
 import control
 from StateSpaceModel import A_reduced, B_reduced, Cq, Dq
 from sisopy31 import *
+import matplotlib.pyplot as plt
 
 Kr = -0.18817
 
@@ -25,3 +26,11 @@ sys = control.ss(Ak, Bk, Ck, Dk)
 
 if __name__ == "__main__":
     sisotool(sys)
+
+T, yout = control.step_response(tf_k)
+plt.plot(T,yout)
+plt.title("Step resonse q feedback")
+plt.xlabel("Time sample")
+plt.ylabel("Amplitude")
+plt.show()
+
