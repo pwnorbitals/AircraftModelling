@@ -34,3 +34,5 @@ plt.xlabel("Time sample")
 plt.ylabel("Amplitude")
 plt.show()
 
+tau = 2/(res[0][1]*2*np.pi)
+print("tau = ", tau)
