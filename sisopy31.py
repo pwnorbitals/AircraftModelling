@@ -74,7 +74,7 @@ def damp(sys):
 
 
 class dragGUI:
-    def __init__(self,sys=-control.tf([-13.76,-8.466],[1.,1.569,13.86]),mingain=0.0001,maxgain=40.0,kdefault=1.0):
+    def __init__(self,sys=-control.tf([-13.76,-8.466],[1.,1.569,13.86]),mingain=0.0001,maxgain=70.0,kdefault=1.0):
         self.fig1=figure(1)
         self.fig1.clf()
         self.ax1=self.fig1.add_subplot(222)
@@ -383,7 +383,7 @@ class draggableGain:
         self.polesloc.figure.canvas.mpl_disconnect(self.cidrelease)
         self.polesloc.figure.canvas.mpl_disconnect(self.cidmotion)
    
-def sisotool(sys,kmin=0.0001,kmax=40.0,kdefault=1.0):
+def sisotool(sys,kmin=0.0001,kmax=70.0,kdefault=1.0):
    sisotool.GUI=dragGUI(sys,kmin,kmax,kdefault)
    show()
 
