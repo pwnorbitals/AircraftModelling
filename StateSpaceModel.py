@@ -58,11 +58,9 @@ A_reduced = A[1:6, 1:6]
 B_reduced = B[1:6, 0:1]
 
 
-sys = ss(A_reduced, B_reduced, Cq, Dq)
+
 
 if __name__== "__main__":
-    control.matlab.damp(sys_original)
-    sisotool(-sys)
     print("A_reduced", A_reduced)
     print("B_reduced", B_reduced)
 

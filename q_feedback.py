@@ -6,9 +6,11 @@ import matplotlib.pyplot as plt
 
 # Open loop definition
 # Done in <StateSpaceModel.py>
+Cq = np.array([[0, 0, 1, 0, 0]])
+Dq = np.array([[0]])
 
 # Open loop analysis
-# Done in <StateSpaceModel.py>
+sys_qopen = ss(A_reduced, B_reduced, Cq, Dq)
 
 # Closed loop gain
 Kq = -0.19235
@@ -16,8 +18,7 @@ Kq = -0.19235
 # Closed loop definition
 Aq = A_reduced - (Kq * np.dot(B_reduced,Cq))
 Bq = Kq * B_reduced
-Cq = np.array([[0, 0, 1, 0, 0]])
-Dq = np.array([[0]])
+
 
 # Closed loop analysis
 print("q state space :")
@@ -39,6 +40,9 @@ print("tau < ", tau)
 
 # Graphs and tuning
 if __name__ == "__main__":
+    control.matlab.damp(sys_qopen)
+    sisotool(-sys_original)
+
     sisotool(sys)
 
     T, yout = control.step_response(tf_k)
