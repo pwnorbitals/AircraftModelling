@@ -66,6 +66,8 @@ sys = ss(A_reduced, B_reduced, Cq, Dq)
 if __name__== "__main__":
     control.matlab.damp(sys_original)
     sisotool(-sys)
+    print("A_reduced", A_reduced)
+    print("B_reduced", B_reduced)
 
 
 

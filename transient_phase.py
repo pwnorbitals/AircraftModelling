@@ -7,7 +7,7 @@ from StateSpaceModel import A,B
 
 A_ph = A[:2,:2]
 print("A_ph",A_ph)
-B_ph = B[2:4,0].reshape((2,1))
+B_ph = B[:2,0].reshape((2,1))
 print("B_ph", B_ph)
 C_ph = np.eye(2)
 D_ph = np.zeros((2,1))
@@ -34,14 +34,14 @@ T_ph, yout_ph = control.step_response(tf_ph)
 plt.plot(T_ph, yout_ph[0,:]) # V in m/s
 plt.title("V Step Response")
 plt.xlabel('Time (seconds)')
-plt.ylabel('Amplitude')
+plt.ylabel('Amplitude in m/s')
 plt.show()
 
 
-plt.plot(T_ph, yout_ph[1,:]) # Q
-plt.title('Q Step Repsonse')
+plt.plot(T_ph, yout_ph[1,:]) #
+plt.title('Gamma Step Response')
 plt.xlabel('Time (seconds)')
-plt.ylabel('Amplitude')
+plt.ylabel('Amplitude in rad')
 plt.show()
 
 
@@ -54,15 +54,15 @@ print("Transfert function : ", tf_sp)
 T_sp, yout_sp = control.step_response(tf_sp)
 
 plt.plot(T_sp, yout_sp[0,:]) # Gamma
-plt.title("Gamma Step Response")
+plt.title("Alpha Step Response")
 plt.xlabel('Time (seconds)')
-plt.ylabel('Amplitude')
+plt.ylabel('Amplitude in rad')
 plt.show()
 
 plt.plot(T_sp, yout_sp[1,:]) # Alpha
-plt.title('Alpha Step Response')
+plt.title('q Step Response')
 plt.xlabel('Time (seconds)')
-plt.ylabel('Amplitude')
+plt.ylabel('Amplitude in rad/s')
 plt.show()
 
 
