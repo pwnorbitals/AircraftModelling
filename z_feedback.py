@@ -6,10 +6,15 @@ import matplotlib.pyplot as plt
 
 
 # Open loop definition
-Az = AgC - KgC*np.dot(BgC,CgC)
-Bz = KgC * BgC
-Cz = np.array([[0, 0, 0, 0, 1]])
-Dz = KgC*DgC
+#Az = AgC - (KgC*np.dot(BgC,CgC))
+#Bz = KgC * BgC
+#Cz = np.array([[0, 0, 0, 0, 1]])
+#Dz = KgC*DgC
+Az= AgC
+Bz = BgC
+Cz = CgC
+Dz = DgC
+
 
 # Open loop analysis
 sys = control.StateSpace(Az,Bz,Cz,Dz)
@@ -25,11 +30,12 @@ Bz2 = Kz * Bz
 Cz2 = np.array([[0, 0, 0, 0, 1]])
 Dz2 = Kz*Dz
 
+
 # Closed loop analysis
 print(Az2, Bz2, Cz2, Dz2)
 sys2 = control.StateSpace(Az2, Bz2, Cz2, Dz2)
 res2 = control.damp(sys2)
-print("damp gamma closed : ")
+print("damp z closed : ")
 control.damp(sys2)
 tf_z2 = control.tf(sys2)
 

@@ -5,7 +5,6 @@ from sisopy31 import *
 import matplotlib.pyplot as plt
 
 # Open loop definition
-# Done in <StateSpaceModel.py>
 Cq = np.array([[0, 0, 1, 0, 0]])
 Dq = np.array([[0]])
 
