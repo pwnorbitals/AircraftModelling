@@ -6,12 +6,16 @@ import matplotlib.pyplot as plt
 from StateSpaceModel import A,B
 
 A_ph = A[:2,:2]
+print("A_ph",A_ph)
 B_ph = B[2:4,0].reshape((2,1))
+print("B_ph", B_ph)
 C_ph = np.eye(2)
 D_ph = np.zeros((2,1))
 
 A_sp = A[2:4,2:4]
+print("A_sp" , A_sp)
 B_sp = B[2:4,0].reshape((2,1))
+print("B_sp ", B_sp)
 C_sp = np.eye(2)
 D_sp = np.zeros((2,1))
 
