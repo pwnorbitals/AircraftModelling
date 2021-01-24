@@ -103,7 +103,9 @@ def compute_equilibrium(Q,S,m, delta_m_0, Cx_0, k, Cz_delta_m, Cz_alpha, X, Y, e
         Cx_eq = Cx_0 + k*Cz_eq**2
 
         Cx_delta_m = 2 * k *Cz_eq*Cz_delta_m
-        delta_m_eq = delta_m_0 - (Cx_eq * np.sin(alpha_eq) + Cz_eq * np.cos(alpha_eq))/(Cx_delta_m * np.sin(alpha_eq) + Cz_delta_m * np.cos(alpha_eq)) * X/(Y - X)
+        delta_m_eq = delta_m_0 - (Cx_eq * np.sin(alpha_eq) +
+                                  Cz_eq * np.cos(alpha_eq))/(Cx_delta_m * np.sin(alpha_eq) +
+                                                             Cz_delta_m * np.cos(alpha_eq)) * X/(Y - X)
 
         new_alpha_eq = alpha_0 + Cz_eq / Cz_alpha - (Cz_delta_m/ Cz_alpha) * delta_m_eq
         new_F_px = Q * S * Cx_eq / np.cos(new_alpha_eq)
