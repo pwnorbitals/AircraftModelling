@@ -4,27 +4,32 @@ from gamma_feedback import Ag, Bg, Cg, Dg, Kg2
 from sisopy31 import *
 import matplotlib.pyplot as plt
 
+# Open loop definition
 Az = Ag - Kg2*np.dot(Bg,Cg)
 Bz = Kg2 * Bg
-
 Cz = np.array([[0, 0, 0, 0, 1]])
 Dz = Kg2*Dg
 
+# Open loop analysis
 sys = control.StateSpace(Az,Bz,Cz,Dz)
 res = control.damp(sys)
 tf_z = control.tf(sys)
 
+# Closed loop gain
 Kz = 0.00232     # On zoom beaucoup et on cherche une valeur tq OS <= 5% et xi >= 0.5 et on minimise tr
-if __name__ == "__main__":
-    sisotool(sys)
+   
+# Closed loop definition
 
+# Closed loop analysis
 print("Transfer function : ", tf_z)
 print("pulsation 1 : ", res[0][0]*2*np.pi, " rad/s")
 print("pulsation 2 : ", res[0][1]*2*np.pi, " rad/s")
 print("pulsation 3 : ", res[0][2]*2*np.pi, " rad/s")
-
 sys = control.ss(Az, Bz, Cz, Dz)
+
+# Graphs and tuning
 if __name__ == "__main__":
+    sisotool(sys)
     T, yout = control.step_response(tf_z)
     plt.plot(T,yout)
     plt.title("Step resonse z feedback")

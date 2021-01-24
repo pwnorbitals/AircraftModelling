@@ -56,8 +56,7 @@ print(B)
 
 A_reduced = A[1:6, 1:6]
 B_reduced = B[1:6, 0:1]
-Cq = np.array([[0, 0, 1, 0, 0]])
-Dq = np.array([[0]])
+
 
 sys = ss(A_reduced, B_reduced, Cq, Dq)
 

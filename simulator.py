@@ -16,9 +16,6 @@ doCSV = True
 doStdout = False
 
 
-
-
-
 def derivatives(state, time):
     
     # Slide 69
@@ -40,15 +37,11 @@ def derivatives(state, time):
     stateDerivatives = np.dot(A,state) + np.dot(B,input)
     output           = np.dot(C,state) + np.dot(D,input)
 
-    
-
-
     return stateDerivatives
 
 
-
-
-
+currentTime = 0
+state = initialState    
 def integrator_step(state, time, derivatives) :
     k1 = integrationStep*derivatives(state, currentTime)
     k2 = integrationStep*derivatives(state + k1/2.0, currentTime + integrationStep/2.0)
@@ -56,17 +49,6 @@ def integrator_step(state, time, derivatives) :
     k4 = integrationStep*derivatives(state + k3, currentTime + integrationStep)
     state += (k1 + 2.0*k2 + 2.0*k3 + k4)/6.0 
     return integrationStep, state
-
-
-
-
-
-
-currentTime = 0
-state = initialState    
-
-
-
 
 
 
