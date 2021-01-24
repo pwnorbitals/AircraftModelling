@@ -27,10 +27,17 @@ T_ph, yout_ph = control.step_response(tf_ph)
 #print("yout_ph[0,:].shape ",yout_ph[0,:].shape )
 
 
-plt.plot(T_ph, yout_ph[0,:])
+plt.plot(T_ph, yout_ph[0,:]) # V in m/s
+plt.title("V Step Response")
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
 plt.show()
 
-plt.plot(T_ph, yout_ph[1,:])
+
+plt.plot(T_ph, yout_ph[1,:]) # Q
+plt.title('Q Step Repsonse')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
 plt.show()
 
 
@@ -42,10 +49,16 @@ tf_sp = control.tf(sys)
 print("Transfert function : ", tf_sp)
 T_sp, yout_sp = control.step_response(tf_sp)
 
-plt.plot(T_sp, yout_sp[0,:])
+plt.plot(T_sp, yout_sp[0,:]) # Gamma
+plt.title("Gamma Step Response")
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
 plt.show()
 
-plt.plot(T_sp, yout_sp[1,:])
+plt.plot(T_sp, yout_sp[1,:]) # Alpha
+plt.title('Alpha Step Response')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude')
 plt.show()
 
 
