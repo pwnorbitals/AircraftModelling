@@ -1,20 +1,19 @@
 import numpy as np
 import control
-from q_feedback import Ak, Bk, Ck, Dk, Kr
+from q_feedback import Aq, Bq, Cq, Dq, Kq
 from StateSpaceModel import A_reduced, B_reduced, Cq, Dq
 from sisopy31 import *
 import matplotlib.pyplot as plt
 
 
 
-#Ag = Ak - Kr*np.dot(Bk,Ck)
-#Bg = Kr * Bk
+#Ag = Ak - Kq*np.dot(Bq,Cq)
+#Bg = Kq * Bq
 
-Ag = A_reduced - (Kr * np.dot(B_reduced,Cq))
-Bg = Kr * B_reduced
-
+Ag = A_reduced - (Kq * np.dot(B_reduced,Cq))
+Bg = Kq * B_reduced
 Cg = np.array([[1, 0, 0, 0, 0]])
-Dg = Kr*Dk
+Dg = Kq*Dq
 
 sys = control.StateSpace(Ag,Bg,Cg,Dg)
 res = control.damp(sys)
@@ -31,17 +30,29 @@ Kg1 = 23.94 # On a modifié le code interne de sisopy31 en modifiant le Gain max
 
 Kg2 = 19.92 # Pb -> OS est toujours à 0%
 
-print("Transfer function : ", tf_g)
-print("pulsation 1 : ", res[0][0]*2*np.pi, " rad/s")
-print("pulsation 2 : ", res[0][1]*2*np.pi, " rad/s")
-print("pulsation 3 : ", res[0][2]*2*np.pi, " rad/s")
+Ag2 = Ag - (Kg2 * np.dot(Bg,Cg))
+Bg2 = Kg2 * Bg
+Cg2 = np.array([[1, 0, 0, 0, 0]])
+Dg2 = Kg2*Dg
 
-sys = control.ss(Ag, Bg, Cg, Dg)
+print(Ag2, Bg2, Cg2, Dg2)
+
+sys2 = control.StateSpace(Ag2,Bg2,Cg2,Dg2)
+res2 = control.damp(sys2)
+print("damp : ")
+control.damp(sys2)
+tf_g2 = control.tf(sys2)
+
+print("Transfer function : ", tf_g2)
+print("pulsation 1 : ", res2[0][0]*2*np.pi, " rad/s")
+print("pulsation 2 : ", res2[0][1]*2*np.pi, " rad/s")
+print("pulsation 3 : ", res2[0][2]*2*np.pi, " rad/s")
+
 if __name__ == "__main__":
-    T, yout = control.step_response(tf_g)
-    plt.plot(T,yout) # T ou yout
+    T, yout = control.step_response(tf_g2)
+    plt.plot(T,yout) 
     plt.title("Step resonse gama feedback")
-    plt.xlabel("Time sample")
-    plt.ylabel("Amplitude")
+    plt.xlabel("Time (s)")
+    plt.ylabel("Amplitude (rad)")
     plt.show()
 

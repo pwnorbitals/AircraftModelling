@@ -85,6 +85,8 @@ def ft2m(h_ft):
 
     return h_m
 
+
+# Slide 48 of Aircraft Longitudinal Dynamics slide
 def compute_equilibrium(Q,S,m, delta_m_0, Cx_0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon, maxit = 70):
 
     alpha_eq = 0
@@ -153,6 +155,7 @@ Q = 1/2. * rho(h_m) * V_eq**2
 epsilon = 1e-3
 
 new_alpha_eq, new_F_px, delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq = compute_equilibrium(Q, S, m, delta_m_0, C_x0, k, Cz_delta_m, Cz_alpha, X, Y, epsilon)
+print(new_alpha_eq, new_F_px, delta_m_eq, Cx_delta_m, Cx_eq, Cz_eq)
 
 if __name__ == "__main__":
     print("rho, vson =", rho(h_m), sound_speed(h_m))
