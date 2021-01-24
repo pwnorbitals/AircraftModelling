@@ -4,7 +4,7 @@ from StateSpaceModel import A_reduced, B_reduced, Cq, Dq
 from sisopy31 import *
 import matplotlib.pyplot as plt
 
-Kq = -0.19235 # On run StateSpaceModel, on zoom dans le graph et on trouve la valeur pour xi = 0.65
+Kq = -0.19235
 
 Aq = A_reduced - (Kq * np.dot(B_reduced,Cq))
 Bq = Kq * B_reduced
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     sisotool(sys)
 
     T, yout = control.step_response(tf_k)
-    plt.plot(T,yout) # T ou yout
+    plt.plot(T,yout)
     plt.title("Step response q feedback loop")
     plt.xlabel("Time (s)")
     plt.ylabel("Amplitude (rad/s)")

@@ -30,10 +30,7 @@ def dicho(alpha):
     # how I do to get alpha ?
     tf_s = control.tf(sys)
     T, yout = control.step_response(tf_s)
-
-
     t, y = control.step_response(sys)
-
     step()
 
 

@@ -6,10 +6,6 @@ from sisopy31 import *
 import matplotlib.pyplot as plt
 
 
-
-#Ag = Ak - Kq*np.dot(Bq,Cq)
-#Bg = Kq * Bq
-
 Ag = A_reduced - (Kq * np.dot(B_reduced,Cq))
 Bg = Kq * B_reduced
 Cg = np.array([[1, 0, 0, 0, 0]])
@@ -17,18 +13,13 @@ Dg = Kq*Dq
 
 sys = control.StateSpace(Ag,Bg,Cg,Dg)
 res = control.damp(sys)
-print("damp : ")
+print("damp gamma open : ")
 control.damp(sys)
 tf_g = control.tf(sys)
+   
 
-if __name__ == "__main__":
-    sisotool(sys)
-
-Kg1 = 23.94 # On a modifié le code interne de sisopy31 en modifiant le Gain max à 70 (l.386 kmax),
-# on a zoomé sur le graphe et cherché le tr opti tq PM >= 7db et GM >= 35°
-
-
-Kg2 = 19.92 # Pb -> OS est toujours à 0%
+Kg1 = 23.94   # zoom on the graph and minimize tr with PM >= 7db and GM >= 35°
+Kg2 = 19.92   # zoom on the graph and minimize tr with OS < 5% and xi > 0.5
 
 Ag2 = Ag - (Kg2 * np.dot(Bg,Cg))
 Bg2 = Kg2 * Bg
@@ -37,9 +28,9 @@ Dg2 = Kg2*Dg
 
 print(Ag2, Bg2, Cg2, Dg2)
 
-sys2 = control.StateSpace(Ag2,Bg2,Cg2,Dg2)
+sys2 = control.StateSpace(Ag2, Bg2, Cg2, Dg2)
 res2 = control.damp(sys2)
-print("damp : ")
+print("damp gamma closed : ")
 control.damp(sys2)
 tf_g2 = control.tf(sys2)
 
@@ -49,6 +40,7 @@ print("pulsation 2 : ", res2[0][1]*2*np.pi, " rad/s")
 print("pulsation 3 : ", res2[0][2]*2*np.pi, " rad/s")
 
 if __name__ == "__main__":
+    sisotool(sys)
     T, yout = control.step_response(tf_g2)
     plt.plot(T,yout) 
     plt.title("Step resonse gama feedback")
