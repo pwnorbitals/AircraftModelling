@@ -32,6 +32,7 @@ Dz2 = Kz*Dz
 
 
 # Closed loop analysis
+print("Z closed loop")
 print(Az2, Bz2, Cz2, Dz2)
 sys2 = control.StateSpace(Az2, Bz2, Cz2, Dz2)
 res2 = control.damp(sys2)
