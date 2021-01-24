@@ -4,6 +4,12 @@ from StateSpaceModel import A_reduced, B_reduced
 from sisopy31 import *
 import matplotlib.pyplot as plt
 
+# Open loop definition
+# Done in <StateSpaceModel.py>
+
+# Open loop analysis
+# Done in <StateSpaceModel.py>
+
 # Closed loop gain
 Kq = -0.19235
 
