@@ -39,7 +39,7 @@ plt.ylabel('Amplitude in m/s')
 plt.show()
 
 
-plt.plot(T_ph, yout_ph[1,:]) #
+plt.plot(T_ph, yout_ph[1,:])
 plt.title('Gamma Step Response')
 plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude in rad')
@@ -57,7 +57,7 @@ print("\nShort Frequency\n")
 sys = control.StateSpace(A_sp,B_sp,C_sp,D_sp)
 res = control.damp(sys)
 tf_sp = control.tf(sys)
-print("Transfert function : ", tf_sp)
+print("Transfer function : ", tf_sp)
 T_sp, yout_sp = control.step_response(tf_sp)
 
 plt.plot(T_sp, yout_sp[0,:]) # Gamma
