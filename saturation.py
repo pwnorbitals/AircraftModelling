@@ -51,6 +51,8 @@ def dicho(gamma_min=0, gamma_max=2*math.pi):
             print("dic 2 : ", gamma_med, gamma_max)
             return dicho(gamma_med, gamma_max)
 
+
+#print("Alphamax = ", alphamax)
 gamma = dicho()
 print(gamma)
 
