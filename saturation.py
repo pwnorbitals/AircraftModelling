@@ -12,8 +12,6 @@ Cs = np.array([[0, 1, 0, 0, 0]])
 Ds = DgC
 sys = control.ss(As, Bs, Cs, Ds)
 
-
-# how I do to get alpha ?
 tf_s = control.tf(sys)
 T, yout = control.step_response(tf_s)
 
@@ -22,7 +20,7 @@ deltan_z = 2.8
 alphamax = alpha_eq + (alpha_eq - alpha_0)*deltan_z
 epsilon = 0.001
 
-def dicho(gamma_min=0, gamma_max=math.pi):
+def dicho(gamma_min=0, gamma_max=2*math.pi):
 
     tf_s = control.tf(sys)
     tstep = 0.1
@@ -38,17 +36,19 @@ def dicho(gamma_min=0, gamma_max=math.pi):
     #plt.plot(tout, yout)
     #plt.show()
 
-    if alphamax_med ==0:
+    if alphamax_med == 0:
         raise "What ?!"
     
-    print(alphamax, alphamax_med)
+    print(alphamax, alphamax_med, (np.abs(alphamax_med - alphamax)/alphamax))
 
     if (np.abs(alphamax_med - alphamax)/alphamax) < epsilon:
         return gamma_med
     else:
-        if alphamax > alphamax_med:
+        if alphamax_med > alphamax :
+            print("dic 1 : ", gamma_min, gamma_med)
             return dicho(gamma_min, gamma_med)
-        elif alphamax < alphamax_med:
+        elif alphamax_med < alphamax:
+            print("dic 2 : ", gamma_med, gamma_max)
             return dicho(gamma_med, gamma_max)
 
 
