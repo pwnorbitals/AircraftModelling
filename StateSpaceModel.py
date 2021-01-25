@@ -27,7 +27,7 @@ Xtho = - ((Ftho * np.cos(new_alpha_eq)) / (m*V_eq))
 
 mv = 0
 malpha = Q*S*l_ref * Cm_alpha / IYY 
-mq = Q*S*l_ref**2*Cm_q / (V_eq*IYY) 
+mq = ((Q*S*(l_ref**2)*Cm_q) / (V_eq*IYY))
 mdelta_m = Q*S*l_ref*Cm_delta_m / IYY 
 
 Zv = 2*Q*S*Cz_eq / (m*V_eq) 
