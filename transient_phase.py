@@ -3,22 +3,22 @@ import control
 import matplotlib.pyplot as plt
 
 
-from StateSpaceModel import A_reduced,B_reduced
+from StateSpaceModel import A,B
 
-A_ph = A_reduced[:2,:2]
+A_ph = A[:3,:3]
 print("A_ph",A_ph)
-B_ph = B_reduced[:2,0].reshape((2,1))
+B_ph = B[:3,0].reshape((3,1))
 print("B_ph shape = ", B_ph.shape)
 print("B_ph", B_ph)
-C_ph = np.eye(2)
-D_ph = np.zeros((2,1))
+C_ph = np.eye(3)
+D_ph = np.zeros((3,1))
 
-A_sp = A_reduced[2:4,2:4]
+A_sp = A[3:6,3:6]
 print("A_sp" , A_sp)
-B_sp = B_reduced[2:4,0].reshape((2,1))
+B_sp = B[3:6,0].reshape((3,1))
 print("B_sp ", B_sp)
-C_sp = np.eye(2)
-D_sp = np.zeros((2,1))
+C_sp = np.eye(3)
+D_sp = np.zeros((3,1))
 
 
 print("\nPhugoid\n")
@@ -45,6 +45,12 @@ plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude in rad')
 plt.show()
 
+plt.plot(T_ph, yout_ph[2,:]) #
+plt.title('Alpha Step Response')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude in rad')
+plt.show()
+
 
 
 print("\nShort Frequency\n")
@@ -55,13 +61,19 @@ print("Transfert function : ", tf_sp)
 T_sp, yout_sp = control.step_response(tf_sp)
 
 plt.plot(T_sp, yout_sp[0,:]) # Gamma
-plt.title("Alpha Step Response")
+plt.title("q Step Response")
 plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude in rad')
 plt.show()
 
 plt.plot(T_sp, yout_sp[1,:]) # Alpha
-plt.title('q Step Response')
+plt.title('theta Step Response')
+plt.xlabel('Time (seconds)')
+plt.ylabel('Amplitude in rad/s')
+plt.show()
+
+plt.plot(T_sp, yout_sp[2,:]) # Alpha
+plt.title('z Step Response')
 plt.xlabel('Time (seconds)')
 plt.ylabel('Amplitude in rad/s')
 plt.show()
