@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 As = AgC
 Bs = BgC
-Cs = CgC
+Cs = np.array([[0, 1, 0, 0, 0]])
 Ds = DgC
 sys = control.ss(As, Bs, Cs, Ds)
 
@@ -51,6 +51,8 @@ def dicho(gamma_min=0, gamma_max=math.pi):
         elif alphamax < alphamax_med:
             return dicho(gamma_med, gamma_max)
 
+
+#print("Alphamax = ", alphamax)
 gamma = dicho()
 print(gamma)
 
